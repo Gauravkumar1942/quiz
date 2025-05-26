@@ -1,0 +1,101 @@
+                * {
+                    margin: 0;
+                    padding: 0;
+                    font-family: 'poppins', sans-serif;
+                    box-sizing: border-box;
+                }
+                .st{
+                    position: relative;
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                    background-color: red;
+                    color: white;
+                    font-size: 15px;
+                    font-weight: bold;
+                    padding: 10px 25px ;
+                    margin: 25px auto;
+                    border-radius: 5px;
+
+                }
+                
+                .app {
+                    background: #fff;
+                    width: 90%;
+                    max-width: 600px;
+                    margin: 5px auto 0px;
+                    border-radius: 10px;
+                    padding: 0px 0px;
+                    /*	display: none;*/
+                    /*	border: 1px solid black;*/
+                }
+                
+                .app h1 {
+                    font-size: 25px;
+                    color: #001e4d;
+                    font-weight: 600;
+                    border-bottom: 1px solid #333;
+                    padding-bottom: 30px;
+                }
+                
+                .quiz {
+                    padding: 20px 0px;
+                    /*	border: 1px solid black;*/
+                }
+                
+                .quiz h2 {
+                    font-size: 18px;
+                    color: #001e4d;
+                    font-weight: 600;
+                }
+                
+                .btn {
+                    background: #fff;
+                    color: #222;
+                    font-weight: 550;
+                    width: 100%;
+                    border: 1px solid #222;
+                    padding: 10px;
+                    margin: 10px 0;
+                    text-align: left;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    box-shadow: 0px 5px 5px black;
+                    /*	display: none;*/
+                    /*	background: rgba(0, 0, 0, 0.5);*/
+                }
+                
+                .btn:hover:not([disabled]) {
+                    background: #222;
+                    color: #fff;
+                }
+                
+                .btn:disabled {
+                    cursor: no-drop;
+                }
+                
+                #next-btn {
+                    background: #001e4d;
+                    font-weight: 500;
+                    color: #fff;
+                    width: 150px;
+                    border: 0;
+                    padding: 10px;
+                    margin: 20px auto 0;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    display: none;
+                }
+                
+                .correct {
+                    background: #7cfc00;
+                }
+                
+                .incorrect {
+                    background: #ff9393;
+                }
+                
