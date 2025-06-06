@@ -1,1 +1,40 @@
+name: Build, Test, and Deploy
 
+on:
+  push:
+    branches: [ main ] # or 'master' if that's your default branch
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Build/Validate (simple HTML/CSS/JS validation)
+      - name: Validate HTML
+        run: |
+          sudo apt-get install -y tidy
+          find . -name "*.html" -exec echo "Validating {}" \; -exec tidy -q -e {} \;
+        continue-on-error: true # Continue even if validation fails
+
+      # Step 3: Run basic tests (you can customize this)
+      - name: Run tests
+        run: |
+          # Example: Check for broken links
+          sudo apt-get install -y linkchecker
+          linkchecker --check-extern index.html
+          
+          # Example: Run JavaScript tests if you have any
+          # npm test (if you have a package.json with tests)
+        continue-on-error: true # Remove this if you want tests to block deployment
+
+      # Step 4: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./ # Deploys everything (for simple sites)
+          keep_files: false # Clean the gh-pages branch before deploy
