@@ -4,37 +4,39 @@ on:
   push:
     branches: [ main ] # or 'master' if that's your default branch
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
       # Step 1: Checkout code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Build/Validate (simple HTML/CSS/JS validation)
+      # Step 2: Validate HTML (optional)
       - name: Validate HTML
         run: |
           sudo apt-get install -y tidy
           find . -name "*.html" -exec echo "Validating {}" \; -exec tidy -q -e {} \;
-        continue-on-error: true # Continue even if validation fails
+        continue-on-error: true
 
-      # Step 3: Run basic tests (you can customize this)
-      - name: Run tests
-        run: |
-          # Example: Check for broken links
-          sudo apt-get install -y linkchecker
-          linkchecker --check-extern index.html
-          
-          # Example: Run JavaScript tests if you have any
-          # npm test (if you have a package.json with tests)
-        continue-on-error: true # Remove this if you want tests to block deployment
-
-      # Step 4: Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      # Step 3: Deploy using GitHub's official Pages action
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./ # Deploys everything (for simple sites)
-          keep_files: false # Clean the gh-pages branch before deploy
+          path: './' # Your root directory or 'dist' if you have build output
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
